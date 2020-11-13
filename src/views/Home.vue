@@ -3,10 +3,14 @@
     <button class="joke-button" v-on:click="generateJokes">
       Generate 10 jokes
     </button>
+    <div ref="container"></div>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
+import Joke from "@/components/Joke.vue";
+
 export default {
   name: "Home",
   props: {},
@@ -20,7 +24,20 @@ export default {
 
       fetchedData = parsed.value.map((item) => item.joke);
 
-      console.log(fetchedData);
+      // To remove the old jokes, if there are any
+      while (this.$refs.container.firstChild) {
+        this.$refs.container.removeChild(this.$refs.container.lastChild);
+      }
+
+      for (let item of fetchedData) {
+        const ComponentClass = Vue.extend(Joke);
+        let instance = new ComponentClass({
+          propsData: { text: item },
+        });
+
+        instance.$mount();
+        this.$refs.container.appendChild(instance.$el);
+      }
     },
   },
 };
