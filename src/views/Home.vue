@@ -1,7 +1,8 @@
 <template>
   <div class="home">
+    <h1>Chuck Norris jokes</h1>
     <button class="joke-button" v-on:click="generateJokes">
-      Generate 10 jokes
+      Generate jokes
     </button>
     <div ref="container"></div>
   </div>
@@ -42,3 +43,23 @@ export default {
   },
 };
 </script>
+
+<style>
+.home {
+  margin: 0 2em;
+}
+
+.joke-button {
+  background-color: #eeeeee;
+  border: 2px solid #222222;
+  padding: 20px 22px;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-bottom: 2em;
+}
+
+.joke-button:hover {
+  background-color: #222222;
+  color: #eeeeee;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <div class="joke">
-    <p>{{ text }}</p>
+    <span>{{ text }}</span>
   </div>
 </template>
 
@@ -10,3 +10,10 @@ export default {
   props: ["text"],
 };
 </script>
+
+<style>
+.joke {
+  border-top: 1px solid #222222;
+  padding: 20px 0;
+}
+</style>
