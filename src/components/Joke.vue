@@ -11,16 +11,24 @@ export default {
   methods: {
     addToFavourites: function() {
       let existingFavourites = JSON.parse(localStorage.getItem("favourites"));
-      console.log(typeof existingFavourites);
 
       if (existingFavourites == null) {
         existingFavourites = [];
-        console.log(existingFavourites);
       }
-      let jokeToAdd = this.$refs.text.innerText;
 
+      let jokeToAdd = this.$refs.text.innerText;
       existingFavourites.push(jokeToAdd);
-      console.log(existingFavourites);
+
+      // Remove if entry if it is already a favorite
+      existingFavourites = existingFavourites.filter((elem, index, self) => {
+        return index === self.indexOf(elem);
+      });
+
+      // Only 10 items allowed. If more than 10 items, remove the first one added
+      if (existingFavourites.length > 10) {
+        existingFavourites.shift();
+      }
+
       window.localStorage.setItem(
         "favourites",
         JSON.stringify(existingFavourites)
