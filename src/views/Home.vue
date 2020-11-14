@@ -49,6 +49,10 @@ export default {
   margin: 0 2em;
 }
 
+.header {
+  text-transform: uppercase;
+}
+
 .header span {
   display: inline-block;
   transform: rotate(-12deg);
