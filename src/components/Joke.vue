@@ -1,6 +1,6 @@
 <template>
   <div class="joke">
-    <span>{{ text }}</span>
+    <span v-on:click="addToFavourites" ref="text">{{ text }}</span>
   </div>
 </template>
 
@@ -8,6 +8,25 @@
 export default {
   name: "Joke",
   props: ["text"],
+  methods: {
+    addToFavourites: function() {
+      let existingFavourites = JSON.parse(localStorage.getItem("favourites"));
+      console.log(typeof existingFavourites);
+
+      if (existingFavourites == null) {
+        existingFavourites = [];
+        console.log(existingFavourites);
+      }
+      let jokeToAdd = this.$refs.text.innerText;
+
+      existingFavourites.push(jokeToAdd);
+      console.log(existingFavourites);
+      window.localStorage.setItem(
+        "favourites",
+        JSON.stringify(existingFavourites)
+      );
+    },
+  },
 };
 </script>
 
