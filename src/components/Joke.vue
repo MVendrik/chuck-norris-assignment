@@ -1,6 +1,9 @@
 <template>
   <div class="joke">
-    <span v-on:click="addToFavourites" ref="text">{{ text }}</span>
+    <span ref="text">{{ text }} </span>
+    <span v-on:click="addToFavourites" class="favourite-button">
+      favourite ❤</span
+    >
   </div>
 </template>
 
@@ -42,5 +45,16 @@ export default {
 .joke {
   border-top: 1px solid #222222;
   padding: 20px 0;
+}
+
+.favourite-button {
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.favourite-button:hover {
+  text-decoration: underline;
+  font-weight: bold;
 }
 </style>

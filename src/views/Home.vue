@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Chuck Norris jokes</h1>
+    <h1 class="header">Chuck Norris <s>jokes</s> <span>facts!</span></h1>
     <button class="joke-button" v-on:click="generateJokes">
       Generate jokes
     </button>
@@ -47,6 +47,11 @@ export default {
 <style>
 .home {
   margin: 0 2em;
+}
+
+.header span {
+  display: inline-block;
+  transform: rotate(-12deg);
 }
 
 .joke-button {
