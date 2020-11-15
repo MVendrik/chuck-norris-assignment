@@ -24,13 +24,24 @@ export default {
       }
 
       setInterval(async function() {
-        let randomJoke = [];
         let response = await fetch("http://api.icndb.com/jokes/random/1");
-
         let parsed = await response.json();
 
-        randomJoke = parsed.value.map((item) => item.joke);
+        let randomJoke = parsed.value.map((item) => item.joke);
         console.log(randomJoke);
+
+        let existingFavourites = JSON.parse(localStorage.getItem("favourites"));
+
+        if (existingFavourites == null) {
+          existingFavourites = [];
+        }
+
+        existingFavourites.push(randomJoke[0]);
+
+        window.localStorage.setItem(
+          "favourites",
+          JSON.stringify(existingFavourites)
+        );
       }, 5000);
     },
   },
