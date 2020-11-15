@@ -54,8 +54,18 @@ export default {
       );
     },
     deleteFavourite: function() {
-      console.log("test");
-      //TODO add delete functionality
+      let existingFavourites = JSON.parse(localStorage.getItem("favourites"));
+
+      existingFavourites = existingFavourites.filter(
+        (item) => item !== this.$refs.text.innerText
+      );
+
+      window.localStorage.setItem(
+        "favourites",
+        JSON.stringify(existingFavourites)
+      );
+
+      this.isFavourite = false;
     },
   },
 };
