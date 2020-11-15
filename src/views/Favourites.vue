@@ -1,6 +1,9 @@
 <template>
   <div class="favourites">
     <h1>Favourites</h1>
+    <button class="random-button" v-on:click="addRandomFavourites">
+      Add random favourites
+    </button>
     <div ref="container"></div>
   </div>
 </template>
@@ -11,6 +14,26 @@ import Vue from "vue";
 
 export default {
   name: "Favourites",
+  methods: {
+    addRandomFavourites: function() {
+      let existingFavourites = JSON.parse(localStorage.getItem("favourites"));
+
+      if (existingFavourites >= 10) {
+        // Do nothing if there are already 10 favourites.
+        return;
+      }
+
+      setInterval(async function() {
+        let randomJoke = [];
+        let response = await fetch("http://api.icndb.com/jokes/random/1");
+
+        let parsed = await response.json();
+
+        randomJoke = parsed.value.map((item) => item.joke);
+        console.log(randomJoke);
+      }, 5000);
+    },
+  },
   mounted() {
     let favourites = JSON.parse(localStorage.getItem("favourites"));
 
@@ -30,5 +53,14 @@ export default {
 <style>
 .favourites {
   margin: 0 2em;
+}
+
+.random-button {
+  background-color: #eeeeee;
+  border: 2px solid #222222;
+  padding: 20px 22px;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-bottom: 2em;
 }
 </style>
