@@ -23,7 +23,7 @@ export default {
         return;
       }
 
-      setInterval(async function() {
+      let timer = setInterval(async function() {
         let response = await fetch("http://api.icndb.com/jokes/random/1");
         let parsed = await response.json();
 
@@ -34,6 +34,10 @@ export default {
 
         if (existingFavourites == null) {
           existingFavourites = [];
+        }
+
+        if (existingFavourites.length >= 10) {
+          clearInterval(timer);
         }
 
         existingFavourites.push(randomJoke[0]);
