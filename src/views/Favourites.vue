@@ -17,7 +17,7 @@ export default {
     for (let favourite of favourites) {
       const ComponentClass = Vue.extend(Joke);
       let instance = new ComponentClass({
-        propsData: { text: favourite },
+        propsData: { text: favourite, isFavourite: true },
       });
 
       instance.$mount();
