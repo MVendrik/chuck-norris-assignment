@@ -1,65 +1,88 @@
 <template>
   <div class="favourites">
     <h1>Favourites</h1>
-    <button class="random-button" v-on:click="addRandomFavourites">
+    <button
+      class="random-button"
+      v-on:click="addRandomFavourites"
+      v-bind:class="{ disabled: disableButton }"
+    >
       Add random favourites
     </button>
-    <div ref="container"></div>
+    <div ref="container">
+      <Joke
+        v-for="(text, index) in currentFavourites"
+        :key="index"
+        :text="text"
+        :isFavourite="true"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import Joke from "@/components/Joke.vue";
-import Vue from "vue";
 
 export default {
   name: "Favourites",
+  components: {
+    Joke,
+  },
+  data() {
+    return {
+      currentFavourites: [],
+      disableButton: false,
+    };
+  },
   methods: {
     addRandomFavourites: function() {
       let existingFavourites = JSON.parse(localStorage.getItem("favourites"));
 
-      if (existingFavourites >= 10) {
+      if (existingFavourites >= 9) {
         // Do nothing if there are already 10 favourites.
         return;
       }
 
-      let timer = setInterval(async function() {
-        let response = await fetch("http://api.icndb.com/jokes/random/1");
-        let parsed = await response.json();
+      let timer = setInterval(
+        async function() {
+          let response = await fetch("http://api.icndb.com/jokes/random/1");
+          let parsed = await response.json();
 
-        let randomJoke = parsed.value.map((item) => item.joke);
-        console.log(randomJoke);
+          let randomJoke = parsed.value.map((item) => item.joke);
 
-        let existingFavourites = JSON.parse(localStorage.getItem("favourites"));
+          let existingFavourites = JSON.parse(
+            localStorage.getItem("favourites")
+          );
 
-        if (existingFavourites == null) {
-          existingFavourites = [];
-        }
+          if (existingFavourites == null) {
+            existingFavourites = [];
+          }
 
-        if (existingFavourites.length >= 10) {
-          clearInterval(timer);
-        }
+          if (existingFavourites.length >= 9) {
+            clearInterval(timer);
+            this.disableButton = true;
+          }
 
-        existingFavourites.push(randomJoke[0]);
+          existingFavourites.push(randomJoke[0]);
 
-        window.localStorage.setItem(
-          "favourites",
-          JSON.stringify(existingFavourites)
-        );
-      }, 5000);
+          window.localStorage.setItem(
+            "favourites",
+            JSON.stringify(existingFavourites)
+          );
+
+          this.currentFavourites = existingFavourites;
+          this.$forceUpdate();
+        }.bind(this),
+        5000
+      );
     },
   },
   mounted() {
     let favourites = JSON.parse(localStorage.getItem("favourites"));
 
-    for (let favourite of favourites) {
-      const ComponentClass = Vue.extend(Joke);
-      let instance = new ComponentClass({
-        propsData: { text: favourite, isFavourite: true },
-      });
+    this.currentFavourites = favourites;
 
-      instance.$mount();
-      this.$refs.container.appendChild(instance.$el);
+    if (this.currentFavourites.length >= 9) {
+      this.disableButton = true;
     }
   },
 };
@@ -77,5 +100,10 @@ export default {
   cursor: pointer;
   text-transform: uppercase;
   margin-bottom: 2em;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
 }
 </style>
