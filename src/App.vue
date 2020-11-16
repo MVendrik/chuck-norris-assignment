@@ -30,6 +30,7 @@ body {
   display: block;
   padding: 20px 22px;
   text-decoration: none;
+  text-transform: lowercase;
 }
 
 .nav-link:hover {

@@ -52,6 +52,7 @@ export default {
 .header {
   text-transform: uppercase;
   margin: 45px 0;
+  font-family: "Goldman", cursive;
 }
 
 .header span {

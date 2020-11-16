@@ -122,6 +122,7 @@ export default {
 .favourites h1 {
   text-transform: uppercase;
   margin: 45px 0;
+  font-family: "Goldman", cursive;
 }
 
 .random-button {
