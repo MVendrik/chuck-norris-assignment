@@ -74,6 +74,8 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Goldman&display=swap");
+
 .joke {
   border-top: 1px solid #222222;
   padding: 20px 0;
@@ -82,6 +84,7 @@ export default {
 .joke-text {
   display: block;
   margin-bottom: 15px;
+  font-family: "Goldman", cursive;
 }
 
 .favourite-button,

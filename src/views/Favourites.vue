@@ -4,7 +4,10 @@
     <button
       class="random-button"
       v-on:click="addRandomFavourites"
-      v-bind:class="{ disabled: disableButton }"
+      v-bind:class="{
+        disabled: disableButton,
+        addingActive: isAddingFavourites,
+      }"
     >
       Add random favourites
     </button>
@@ -32,6 +35,7 @@ export default {
     return {
       currentFavourites: [],
       disableButton: false,
+      isAddingFavourites: false,
     };
   },
   methods: {
@@ -43,35 +47,44 @@ export default {
         return;
       }
 
+      this.isAddingFavourites = !this.isAddingFavourites;
+      console.log(this.isAddingFavourites);
+
       let timer = setInterval(
         async function() {
-          let response = await fetch("http://api.icndb.com/jokes/random/1");
-          let parsed = await response.json();
-
-          let randomJoke = parsed.value.map((item) => item.joke);
-
-          let existingFavourites = JSON.parse(
-            localStorage.getItem("favourites")
-          );
-
-          if (existingFavourites == null) {
-            existingFavourites = [];
-          }
-
-          if (existingFavourites.length >= 9) {
+          if (!this.isAddingFavourites) {
             clearInterval(timer);
-            this.disableButton = true;
+            console.log("stopped");
+          } else {
+            let response = await fetch("http://api.icndb.com/jokes/random/1");
+            let parsed = await response.json();
+
+            let randomJoke = parsed.value.map((item) => item.joke);
+
+            let existingFavourites = JSON.parse(
+              localStorage.getItem("favourites")
+            );
+
+            if (existingFavourites == null) {
+              existingFavourites = [];
+            }
+
+            if (existingFavourites.length >= 9) {
+              clearInterval(timer);
+              this.disableButton = true;
+              this.isAddingFavourites = false;
+            }
+
+            existingFavourites.push(randomJoke[0]);
+
+            window.localStorage.setItem(
+              "favourites",
+              JSON.stringify(existingFavourites)
+            );
+
+            this.currentFavourites = existingFavourites;
+            this.$forceUpdate();
           }
-
-          existingFavourites.push(randomJoke[0]);
-
-          window.localStorage.setItem(
-            "favourites",
-            JSON.stringify(existingFavourites)
-          );
-
-          this.currentFavourites = existingFavourites;
-          this.$forceUpdate();
         }.bind(this),
         5000
       );
@@ -117,5 +130,9 @@ export default {
 .disabled {
   pointer-events: none;
   opacity: 0.4;
+}
+
+.addingActive {
+  background-color: green;
 }
 </style>
