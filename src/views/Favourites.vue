@@ -11,6 +11,7 @@
     >
       Add random favourites
     </button>
+    <span class="disclaimer">There is a maximum of 10 favourites</span>
     <div ref="container">
       <Joke
         v-for="(text, index) in currentFavourites"
@@ -118,13 +119,24 @@ export default {
   margin: 0 2em;
 }
 
+.favourites h1 {
+  text-transform: uppercase;
+  margin: 45px 0;
+}
+
 .random-button {
   background-color: #eeeeee;
   border: 2px solid #222222;
   padding: 20px 22px;
   cursor: pointer;
   text-transform: uppercase;
-  margin-bottom: 2em;
+  margin-bottom: 5px;
+}
+
+.disclaimer {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 45px;
 }
 
 .disabled {
@@ -134,5 +146,10 @@ export default {
 
 .addingActive {
   background-color: green;
+}
+
+.random-button:hover {
+  background-color: #222222;
+  color: #eeeeee;
 }
 </style>

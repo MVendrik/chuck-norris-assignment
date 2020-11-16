@@ -81,10 +81,16 @@ export default {
   padding: 20px 0;
 }
 
+.joke:hover {
+  background: #eeeeee;
+}
+
 .joke-text {
   display: block;
   margin-bottom: 15px;
   font-family: "Goldman", cursive;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .favourite-button,
@@ -101,8 +107,5 @@ export default {
 
 .active {
   display: inline-flex;
-}
-
-.favourite-button:hover {
 }
 </style>

@@ -51,6 +51,7 @@ export default {
 
 .header {
   text-transform: uppercase;
+  margin: 45px 0;
 }
 
 .header span {
@@ -64,7 +65,7 @@ export default {
   padding: 20px 22px;
   cursor: pointer;
   text-transform: uppercase;
-  margin-bottom: 2em;
+  margin-bottom: 45px;
 }
 
 .joke-button:hover {
