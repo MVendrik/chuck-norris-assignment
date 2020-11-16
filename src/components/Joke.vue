@@ -66,6 +66,8 @@ export default {
       );
 
       this.isFavourite = false;
+
+      this.$emit("delete-Favourite", this.$refs.text.innerText);
     },
   },
 };

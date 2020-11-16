@@ -14,6 +14,7 @@
         :key="index"
         :text="text"
         :isFavourite="true"
+        @delete-Favourite="deleteFavourite"
       />
     </div>
   </div>
@@ -74,6 +75,17 @@ export default {
         }.bind(this),
         5000
       );
+    },
+    deleteFavourite: function(e) {
+      this.currentFavourites = this.currentFavourites.filter(
+        (item) => item !== e
+      );
+
+      if (this.currentFavourites.length < 10) {
+        this.disableButton = false;
+      }
+
+      this.$forceUpdate();
     },
   },
   mounted() {
